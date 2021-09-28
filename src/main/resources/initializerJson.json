@@ -1,0 +1,22 @@
+[
+  {
+    "httpRequest": {
+      "path": "/simpleFirst"
+    },
+    "httpResponse": {
+      "body": "some first response"
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/simpleSecondWithDelay"
+    },
+    "httpResponse": {
+      "body": "some second response",
+      "delay": {
+        "timeUnit": "SECONDS",
+        "value": 10
+      }
+    }
+  }
+]
