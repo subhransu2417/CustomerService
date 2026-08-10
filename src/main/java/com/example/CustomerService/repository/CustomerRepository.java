@@ -16,6 +16,7 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
     @Query(value = "update customer set " +
             "first_name= :#{#customer.firstName}, " +
             "last_name= :#{#customer.lastName}, " +
-            "dob= :#{#customer.dob} where id= :id", nativeQuery = true)
+            "dob= :#{#customer.dob}, " +
+            "mobile= :#{#customer.mobile} where id= :id", nativeQuery = true)
     void updateCustomer(@Param("customer") Customer customer, String id);
 }

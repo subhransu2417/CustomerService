@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS public.customer (
 	first_name varchar NOT NULL,
 	last_name varchar NOT NULL,
 	dob DATE NOT NULL,
+	mobile varchar NOT NULL,
 	CONSTRAINT id_pk PRIMARY KEY (id)
 );
