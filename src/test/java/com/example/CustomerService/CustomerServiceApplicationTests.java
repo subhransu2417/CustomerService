@@ -45,6 +45,7 @@ public class CustomerServiceApplicationTests {
         when(customerRepository.findById(anyString())).thenReturn(Optional.of(customer));
         ResponseEntity<Customer> customerResponseEntity = customerController.getCustomer("123");
         Assert.assertEquals(HttpStatus.OK, customerResponseEntity.getStatusCode());
+        Assert.assertEquals("1234567890", customerResponseEntity.getBody().getMobile());
     }
 
     @Test(expected = ConstraintViolationException.class)
@@ -64,6 +65,7 @@ public class CustomerServiceApplicationTests {
         customer.setFirstName("Subhransu");
         customer.setLastName("Das");
         customer.setDob(new Date());
+        customer.setMobile("1234567890");
         return customer;
     }
 

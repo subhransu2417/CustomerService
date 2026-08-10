@@ -32,4 +32,8 @@ public class Customer {
     @NotNull
     @Column(name = "dob")
     private Date dob;
+
+    @NotBlank
+    @Column(name = "mobile")
+    private String mobile;
 }
