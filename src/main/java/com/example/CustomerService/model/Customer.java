@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import com.example.CustomerService.validation.ValidMobile;
 import java.util.Date;
 
 @Data
@@ -34,6 +35,7 @@ public class Customer {
     private Date dob;
 
     @NotBlank
+    @ValidMobile
     @Column(name = "mobile")
     private String mobile;
 }

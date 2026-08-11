@@ -58,6 +58,13 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
+		<!-- libphonenumber for phone validation and formatting -->
+		<dependency>
+			<groupId>com.googlecode.libphonenumber</groupId>
+			<artifactId>libphonenumber</artifactId>
+			<version>8.12.3</version>
+		</dependency>
+
 		<!-- postgresql configuration -->
 		<dependency>
 			<groupId>org.postgresql</groupId>

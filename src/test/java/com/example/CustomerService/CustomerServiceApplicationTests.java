@@ -45,7 +45,7 @@ public class CustomerServiceApplicationTests {
         when(customerRepository.findById(anyString())).thenReturn(Optional.of(customer));
         ResponseEntity<Customer> customerResponseEntity = customerController.getCustomer("123");
         Assert.assertEquals(HttpStatus.OK, customerResponseEntity.getStatusCode());
-        Assert.assertEquals("1234567890", customerResponseEntity.getBody().getMobile());
+        Assert.assertEquals("+14155552671", customerResponseEntity.getBody().getMobile());
     }
 
     @Test(expected = ConstraintViolationException.class)
@@ -60,12 +60,24 @@ public class CustomerServiceApplicationTests {
         Assert.assertEquals(HttpStatus.ACCEPTED, customerResponseEntity.getStatusCode());
     }
 
+    @Test
+    public void testAddCustomer_FormatsPhoneNumber() throws Exception {
+        Customer customer = getCustomer();
+        customer.setMobile("4155552671"); // Unformatted US number
+
+        when(customerRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
+
+        ResponseEntity<String> response = customerController.addCustomer(customer);
+        Assert.assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        Assert.assertEquals("+14155552671", customer.getMobile()); // Verify it got formatted to E164
+    }
+
     private Customer getCustomer() {
         Customer customer = new Customer();
         customer.setFirstName("Subhransu");
         customer.setLastName("Das");
         customer.setDob(new Date());
-        customer.setMobile("1234567890");
+        customer.setMobile("+14155552671");
         return customer;
     }
 

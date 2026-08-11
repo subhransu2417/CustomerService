@@ -27,6 +27,7 @@ public class CustomerController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addCustomer(@Valid @RequestBody Customer customer) {
         customer.setId(UUID.randomUUID().toString());
+        customer.setMobile(formatMobileNumber(customer.getMobile()));
         Customer addedCustomer = customerRepository.save(customer);
         return new ResponseEntity<>(addedCustomer.getId(), HttpStatus.CREATED);
     }
@@ -35,8 +36,23 @@ public class CustomerController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateCustomer(@PathVariable String id,
                                                @Valid @RequestBody Customer customer) {
+        customer.setMobile(formatMobileNumber(customer.getMobile()));
         customerRepository.updateCustomer(customer, id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    private String formatMobileNumber(String mobile) {
+        if (mobile == null) {
+            return null;
+        }
+        try {
+            com.google.i18n.phonenumbers.PhoneNumberUtil phoneNumberUtil = com.google.i18n.phonenumbers.PhoneNumberUtil.getInstance();
+            String defaultRegion = mobile.trim().startsWith("+") ? null : "US";
+            com.google.i18n.phonenumbers.Phonenumber.PhoneNumber number = phoneNumberUtil.parse(mobile, defaultRegion);
+            return phoneNumberUtil.format(number, com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat.E164);
+        } catch (Exception e) {
+            return mobile;
+        }
     }
 
     @GetMapping(value = "/getCustomer/{id}")
